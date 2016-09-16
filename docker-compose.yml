@@ -1,0 +1,20 @@
+version: '2'
+services:
+   elasticsearch:
+      image: graph/elasticsearch
+      build: ./elasticsearch
+   kibana:
+      image: graph/kibana
+      build: ./kibana
+      links:
+         - elasticsearch
+      ports:
+         - "5601:5601"
+   script:
+      image: graph/script
+      mem_limit: 2048m
+      build: ./script
+      links:
+         - elasticsearch
+      tty: true
+      stdin_open: true
